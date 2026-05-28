@@ -1,8 +1,10 @@
 import axios from "axios"
-import React, { useState } from "react"
+import { useState } from "react"
+import { useNavigate } from "react-router"
 
 function LoginPage() {
 
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [menssagem, setMenssagem] = useState("");
@@ -46,7 +48,7 @@ function LoginPage() {
                     value={senha}
                     onChange={(e) => setSenha(e.target.value)}
                 />
-                <button onClick={handleLogin}>Login</button>
+                <button onClick={handleLogin} >Login</button>
             </div>
         </>
     )

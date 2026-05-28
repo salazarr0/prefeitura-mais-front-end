@@ -1,8 +1,14 @@
-
+import axios from "axios";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+
 
 function RegisterPage() {
 
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [menssagem, setMenssagem] = useState("");
     const navigate = useNavigate();
 
     const backButton = () => {
@@ -15,13 +21,59 @@ function RegisterPage() {
         navigate('/login');
     }
 
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        setMenssagem("")
+
+        try {
+            const reposta = await axios.post("https://prefeitura-mais-api-production.up.railway.app/usuarios/", {
+                nome: nome,
+                email: email,
+                senha: senha
+            })
+
+            localStorage.setItem("token", reposta.data.token)
+            console.log("Registro efetuado com sucesso")
+            navigate("/")
+
+        } catch (error) {
+            if (error.response) {
+                setMenssagem(error.response.data.menssagem || "Erro ao fazer registro")
+            } else {
+                setMenssagem("Erro de conexão com o servidor")
+            }
+        }
+    }
+
     return (
         <>
-            <div>
-                <button onClick={backButton}>Voltar</button>
-                <button onClick={loginButton}>Login</button>
+            <div className="flex flex-col items-center justify-center h-screen ">
+                <button onClick={backButton} className="border-2 border-gray-300">Voltar</button>
+                <button onClick={loginButton} className="border-2 border-gray-300">Login</button>
                 <h1>Registrar</h1>
-                <p>Registrar</p>
+
+                <input type="text"
+                    placeholder="nome"
+                    value={nome}
+                    className="border-2 border-gray-300"
+                    onChange={(e) => setNome(e.target.value)}
+                />
+
+                <input type="email"
+                    placeholder="email"
+                    className="border-2 border-gray-300"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input type="password"
+                    placeholder="senha"
+                    value={senha}
+                    className="border-2 border-gray-300"
+                    onChange={(e) => setSenha(e.target.value)}
+                />
+                <button onClick={handleRegister} className="border-2 border-gray-300 rounded-md cursor-pointer">Confirmar Registro</button>
+
+
             </div>
         </>
     )
