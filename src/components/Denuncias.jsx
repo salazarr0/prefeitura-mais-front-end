@@ -10,9 +10,9 @@ function Denuncias() {
 
         const pegarDenuncias = async () => {
             try {
-                const resposta = await axios.get("https://prefeitura-mais-api-production.up.railway.app/denuncias")
-                setDenuncias(resposta.data)
-                console.log(resposta.data)
+                const { data } = await axios.get("https://prefeitura-mais-api-production.up.railway.app/denuncias")
+                setDenuncias(data)
+                console.log(data)
             } catch (error) {
                 console.log(error)
             }
@@ -21,18 +21,20 @@ function Denuncias() {
         pegarDenuncias();
     }, [])
 
-
     return (
         <>
+            <ul>
+                {denuncias.map(denuncia => (
+                    <li key={denuncia.id}>
+                        <CardDenuncia
+                            denuncia={denuncia.titulo}
+                            descricao={denuncia.descricao}
+                            endereco_denuncia={denuncia.endereco_denuncia}
+                        />
+                    </li>
+                ))}
+            </ul>
 
-            <h1>Denuncias</h1>
-
-            {denuncias.map((denuncia) => (
-                <CardDenuncia key={denuncia.id} denuncia={denuncia.titulo}
-                    descricao={denuncia.descricao}
-                    endereco_denuncia={denuncia.endereco_denuncia}
-                />
-            ))}
         </>
     )
 
