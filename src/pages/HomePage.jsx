@@ -15,6 +15,11 @@ function HomePage() {
         navigate('/login');
     }
 
+    const denunciaButton = () => {
+
+        navigate('/postar-denuncia');
+    }
+
 
 
 
@@ -30,6 +35,7 @@ function HomePage() {
                         <div className="flex gap-3">
                             <button onClick={registerButton} className="px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors duration-200">registrar</button>
                             <button onClick={loginButton} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">login</button>
+                            <button onClick={denunciaButton} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">postar denuncia</button>
                         </div>
 
                     </header>
