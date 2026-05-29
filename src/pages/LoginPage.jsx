@@ -7,11 +7,11 @@ function LoginPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [menssagem, setMenssagem] = useState("");
+    const [mensagem, setMensagem] = useState("");
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setMenssagem("")
+        setMensagem("")
 
         try {
             const resposta = await axios.post("https://prefeitura-mais-api-production.up.railway.app/usuarios/login", {
@@ -26,10 +26,14 @@ function LoginPage() {
         } catch (error) {
             if (error.response) {
 
-                setMenssagem(error.response.data.menssagem || "Erro ao fazer login")
+                console.log(error.response.data)
+
+                const mensagemBackend = error.response.data.mensagem
+                setMensagem(mensagemBackend)
+
 
             } else {
-                setMenssagem("Erro de conexão com o servidor")
+                setMensagem("Erro de conexão com o servidor")
             }
         }
     }
@@ -38,6 +42,12 @@ function LoginPage() {
             <div className="flex flex-col items-center justify-center h-screen">
                 <h1>login</h1>
                 <button className="border-2 border-gray-300 rounded-md cursor-pointer" onClick={() => navigate("/")}>Home</button>
+
+                {mensagem && (
+                    <div className="w-64 p-3 text-sm text-center text-red-700 bg-red-100 border border-red-400 rounded-md">
+                        {mensagem}
+                    </div>)}
+
                 <input type="email"
                     placeholder="email"
                     value={email}

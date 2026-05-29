@@ -8,7 +8,7 @@ function RegisterPage() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [menssagem, setMenssagem] = useState("");
+    const [mensagem, setMensagem] = useState("");
     const navigate = useNavigate();
 
     const backButton = () => {
@@ -23,7 +23,7 @@ function RegisterPage() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        setMenssagem("")
+        setMensagem("")
 
         try {
             const reposta = await axios.post("https://prefeitura-mais-api-production.up.railway.app/usuarios/", {
@@ -38,9 +38,9 @@ function RegisterPage() {
 
         } catch (error) {
             if (error.response) {
-                setMenssagem(error.response.data.menssagem || "Erro ao fazer registro")
+                setMensagem(error.response.data.mensagem || "Erro ao fazer registro")
             } else {
-                setMenssagem("Erro de conexão com o servidor")
+                setMensagem("Erro de conexão com o servidor")
             }
         }
     }
