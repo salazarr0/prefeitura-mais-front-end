@@ -35,20 +35,22 @@ function LoginPage() {
     }
     return (
         <>
-            <div>
+            <div className="flex flex-col items-center justify-center h-screen">
                 <h1>login</h1>
-
+                <button className="border-2 border-gray-300 rounded-md cursor-pointer" onClick={() => navigate("/")}>Home</button>
                 <input type="email"
                     placeholder="email"
                     value={email}
+                    className="border-2 border-gray-300 rounded-md cursor-pointer"
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <input type="password"
                     placeholder="senha"
                     value={senha}
+                    className="border-2 border-gray-300 rounded-md cursor-pointer"
                     onChange={(e) => setSenha(e.target.value)}
                 />
-                <button onClick={handleLogin} >Login</button>
+                <button onClick={handleLogin} className="border-2 border-green-300 rounded-md cursor-pointer">Login</button>
             </div>
         </>
     )
