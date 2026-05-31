@@ -27,9 +27,11 @@ function Denuncias() {
                 {denuncias.map(denuncia => (
                     <li key={denuncia.id}>
                         <CardDenuncia
-                            denuncia={denuncia.titulo}
+                            titulo={denuncia.titulo}
                             descricao={denuncia.descricao}
-                            endereco_denuncia={denuncia.endereco_denuncia}
+                            status={denuncia.status}
+                            endereco={denuncia.endereco}
+                            usuario={denuncia.usuario.nome}
                         />
                     </li>
                 ))}

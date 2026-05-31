@@ -1,8 +1,9 @@
 import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router"
+import { jwtDecode } from "jwt-decode";
 
-function LoginPage() {
+export default function LoginPage() {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -19,9 +20,12 @@ function LoginPage() {
                 senha: senha
             })
 
-            localStorage.setItem("token", resposta.data.token)
+            localStorage.setItem("token", resposta.data)
+            const token = localStorage.getItem("token")
+            const userPayload = jwtDecode(token)
             console.log("Login efetuado com sucesso")
-            navigate("/")
+            const path = userPayload.papel == 'funcionario'?'/admin':'/'
+            navigate(path)
 
         } catch (error) {
             if (error.response) {
@@ -65,5 +69,3 @@ function LoginPage() {
         </>
     )
 }
-
-export default LoginPage

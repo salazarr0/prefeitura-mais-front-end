@@ -3,6 +3,7 @@ import RegisterPage from './pages/RegisterPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import { BrowserRouter, Routes, Route } from "react-router";
 import PostarDenunciaPage from './pages/PostarDenunciaPage.jsx';
+import HomePageAdmin from './pages/HomePageAdmin.jsx';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registro" element={<RegisterPage />} />
           <Route path="/postar-denuncia" element={<PostarDenunciaPage />} />
+          <Route path="/admin" element={<HomePageAdmin />} />
         </Routes>
       </BrowserRouter>
     </>

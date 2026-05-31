@@ -31,8 +31,6 @@ function RegisterPage() {
                 email: email,
                 senha: senha
             })
-
-            localStorage.setItem("token", reposta.data.token)
             console.log("Registro efetuado com sucesso")
             navigate("/")
 
