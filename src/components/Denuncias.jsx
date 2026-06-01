@@ -1,45 +1,37 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import CardDenuncia from "./cardDenuncia"
+import CardDenuncia from "./cardDenuncia";
 
-function Denuncias() {
+function Denuncias({ denuncias }) {
 
-    const [denuncias, setDenuncias] = useState([])
-
-    useEffect(() => {
-
-        const pegarDenuncias = async () => {
-            try {
-                const { data } = await axios.get("https://prefeitura-mais-api-production.up.railway.app/denuncias")
-                setDenuncias(data)
-                console.log(data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
-        pegarDenuncias();
-    }, [])
+    if (!denuncias.length) {
+        return (
+            <p className="text-gray-500">
+                Nenhuma denúncia encontrada.
+            </p>
+        );
+    }
 
     return (
-        <>
-            <ul>
-                {denuncias.map(denuncia => (
-                    <li key={denuncia.id}>
-                        <CardDenuncia
-                            titulo={denuncia.titulo}
-                            descricao={denuncia.descricao}
-                            status={denuncia.status}
-                            endereco={denuncia.endereco}
-                            usuario={denuncia.usuario.nome}
-                        />
-                    </li>
-                ))}
-            </ul>
 
-        </>
-    )
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {denuncias.map((denuncia) => (
 
+
+
+                <CardDenuncia
+                    key={denuncia.id}
+                    titulo={denuncia.titulo}
+                    descricao={denuncia.descricao}
+                    status={denuncia.status}
+                    endereco={denuncia.endereco}
+                    usuario={denuncia.usuario?.nome || "Anônimo"}
+                />
+
+            ))}
+
+        </div>
+
+
+    );
 }
 
-export default Denuncias
+export default Denuncias;

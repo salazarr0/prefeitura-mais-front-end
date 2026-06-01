@@ -1,16 +1,17 @@
-function CardDenuncia({titulo, descricao, endereco, status, usuario}){
+function CardDenuncia({ titulo, descricao, endereco, status, usuario }) {
 
     return (
-        <div className="w-full p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 flex flex-col gap-2">
-            <div className="flex flex-col text-lg font-bold text-gray-800">
-                <span className="text-sm font-bold text-gray-800">{titulo}</span>
-                <span className="text-sm text-gray-600">{descricao}</span>
-                <span className="text-sm text-gray-600">{status}</span>
-                <span className="text-sm text-gray-600">Denucia feita por: {usuario? usuario: 'Anônimo'}</span>
-                <div className="mt-2 pt-2 border-t border-gray-100">
-                    <span className="text-xs font-medium text-gray-800">{endereco}</span>
-                </div>
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-5 h-full flex flex-col">
 
+            <div className="flex justify-between items-start mb-3">
+                <h2 className="font-bold text-lg text-gray-800">{titulo}</h2>
+                <span className="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-700">{status}</span>
+            </div>
+            <p className="text-gray-600 text-sm flex-grow">{descricao}</p>
+
+            <div className="mt-4 pt-4 border-t border-gray-100 space-y-2">
+                <p className="text-sm text-gray-500">Denucia feita por: {usuario ? usuario : 'Anônimo'}</p>
+                <p className="text-sm text-gray-500">{endereco}</p>
             </div>
         </div>
     )
