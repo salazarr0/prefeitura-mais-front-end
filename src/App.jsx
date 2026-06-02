@@ -1,6 +1,7 @@
 import HomePage from './pages/HomePage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import PerfilPage from './pages/PerfilPage.jsx'
 import { useState } from "react"
 import { BrowserRouter, Routes, Route } from "react-router";
 import PostarDenunciaPage from './pages/PostarDenunciaPage.jsx';
@@ -19,18 +20,18 @@ function App() {
         <Routes>
           <Route path="/" element={
             <HomePage
-              todasDenuncias={todasDenuncias} 
+              todasDenuncias={todasDenuncias}
               setTodasDenuncias={setTodasDenuncias}
               denuncias={denuncias}
               setDenuncias={setDenuncias}
-            />} 
+            />}
           />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registro" element={<RegisterPage />} />
           <Route path="/postar-denuncia" element={<PostarDenunciaPage />} />
           <Route path="/admin" element={
-            <HomePageAdmin 
-              todasDenuncias={todasDenuncias} 
+            <HomePageAdmin
+              todasDenuncias={todasDenuncias}
               setTodasDenuncias={setTodasDenuncias}
               denuncias={denuncias}
               setDenuncias={setDenuncias}
@@ -38,11 +39,12 @@ function App() {
               setTodosDepartamentos={setTodosDepartamentos}
               departamentos={departamento}
               setDepartamento={setDepartamento}
-            />} 
+            />}
           />
           <Route path="/admin/criar-departamento" element={< CriarDepartamentoPage />} />
+          <Route path="/perfil" element={< PerfilPage />} />
         </Routes>
-        
+
       </BrowserRouter>
     </>
   )

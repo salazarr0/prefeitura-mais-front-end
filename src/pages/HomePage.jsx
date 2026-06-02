@@ -2,9 +2,11 @@ import BarraDePesquisa from "../components/BarraDePesquisa";
 import Denuncias from "../components/Denuncias";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
+
+
 import axios from "axios";
 
-function HomePage({todasDenuncias, setTodasDenuncias, denuncias, setDenuncias}) {
+function HomePage({ todasDenuncias, setTodasDenuncias, denuncias, setDenuncias }) {
 
     const [logado, setLogado] = useState(false);
 
@@ -59,6 +61,11 @@ function HomePage({todasDenuncias, setTodasDenuncias, denuncias, setDenuncias}) 
         navigate("/login");
     };
 
+    const perfilButton = () => {
+        navigate("/perfil");
+    };
+
+
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4">
 
@@ -92,6 +99,12 @@ function HomePage({todasDenuncias, setTodasDenuncias, denuncias, setDenuncias}) 
                                 >
                                     logout
                                 </button>
+
+                                <button onClick={perfilButton}
+                                    className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    perfil
+                                </button>
+
                             </>
                         ) : (
                             <>
@@ -121,7 +134,7 @@ function HomePage({todasDenuncias, setTodasDenuncias, denuncias, setDenuncias}) 
                         Denúncias
                     </h1>
 
-                    <Denuncias denuncias={denuncias}/>
+                    <Denuncias denuncias={denuncias} />
 
                 </main>
 

@@ -1,21 +1,21 @@
 import BarraDePesquisa from "../components/BarraDePesquisa";
 import Denuncias from "../components/Denuncias";
+import PerfilPage from "./PerfilPage";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Departamento from "../components/Departamento";
 
 export default function HomePageAdmin({
-    todasDenuncias, 
-    setTodasDenuncias, 
-    denuncias, 
-    setDenuncias, 
-    todosDepartamentos, 
-    setTodosDepartamentos, 
-    departamentos, 
+    todasDenuncias,
+    setTodasDenuncias,
+    denuncias,
+    setDenuncias,
+    todosDepartamentos,
+    setTodosDepartamentos,
+    departamentos,
     setDepartamento
-})
-{
+}) {
 
     const [logado, setLogado] = useState(false);
 
@@ -63,7 +63,7 @@ export default function HomePageAdmin({
 
     }, []);
 
-        
+
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -80,6 +80,10 @@ export default function HomePageAdmin({
         localStorage.removeItem("token")
         setLogado(false)
         navigate("/")
+    }
+
+    const perfilButton = () => {
+        navigate("/perfil")
     }
 
     return (
@@ -100,6 +104,7 @@ export default function HomePageAdmin({
                             <>
                                 <button onClick={departamentoButton} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">departamentos</button>
                                 <button onClick={logOut} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">logout</button>
+                                <button onClick={perfilButton} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">perfil</button>
                             </>
                         </div>
 

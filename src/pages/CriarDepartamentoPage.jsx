@@ -51,7 +51,7 @@ export default function CriarDepartamentoPage() {
         if (!endereco) {
             erros.endereco = "O endereço não pode estar vazio.";
         }
-        if(endereco.trim().length < 5) {
+        if (endereco.trim().length < 5) {
             erros.endereco = "O endereço é muito curto.";
         }
         if (!gerente_id) {
@@ -72,7 +72,7 @@ export default function CriarDepartamentoPage() {
         setMenssagem("")
 
         if (!validarFormulario()) {
-            return; 
+            return;
         }
 
         try {
@@ -137,7 +137,7 @@ export default function CriarDepartamentoPage() {
                     />
                 </div>
                 {erroCampo.horario_funcionamento && <p className="text-red-500 text-sm mt-1">{erroCampo.horario_funcionamento}</p>}
-                
+
                 <div className="flex">
                     <p>De: </p>
                     <select
@@ -165,7 +165,7 @@ export default function CriarDepartamentoPage() {
                     onChange={(e) => setEndereco(e.target.value)}
                 />
                 {erroCampo.endereco && <p className="text-red-500 text-sm mt-1">{erroCampo.endereco}</p>}
-                
+
 
                 <select
                     onChange={(e) => setGerente_id(Number(e.target.value))}
@@ -176,7 +176,7 @@ export default function CriarDepartamentoPage() {
                     ))}
                 </select>
                 {erroCampo.gerente_id && <p className="text-red-500 text-sm mt-1">{erroCampo.gerente_id}</p>}
-                <button onClick={handleCriarDepartamento} className="border-2 border-green-300 rounded-md cursor-pointer">Denunciar</button>
+                <button onClick={handleCriarDepartamento} className="border-2 border-green-300 rounded-md cursor-pointer">Criar Departamento</button>
                 {mensagem && (
                     <div className="w-64 p-3 text-sm text-center text-red-700 bg-red-100 border border-red-400 rounded-md">
                         {mensagem}
