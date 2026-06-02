@@ -1,4 +1,4 @@
-function CardDenuncia({ titulo, descricao, endereco, status, usuario }) {
+function CardDenuncia({ titulo, descricao, endereco, status, usuario, tipo_denuncia }) {
 
     return (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-5 h-full flex flex-col">
@@ -11,6 +11,7 @@ function CardDenuncia({ titulo, descricao, endereco, status, usuario }) {
 
             <div className="mt-4 pt-4 border-t border-gray-100 space-y-2">
                 <p className="text-sm text-gray-500">Denucia feita por: {usuario ? usuario : 'Anônimo'}</p>
+                <p className="text-sm text-gray-500">Categoria: {tipo_denuncia}</p>
                 <p className="text-sm text-gray-500">{endereco}</p>
             </div>
         </div>

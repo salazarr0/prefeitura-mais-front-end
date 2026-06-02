@@ -3,16 +3,23 @@ import Denuncias from "../components/Denuncias";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Departamento from "../components/Departamento";
 
-export default function HomePageAdmin() {
+export default function HomePageAdmin({
+    todasDenuncias, 
+    setTodasDenuncias, 
+    denuncias, 
+    setDenuncias, 
+    todosDepartamentos, 
+    setTodosDepartamentos, 
+    departamentos, 
+    setDepartamento
+})
+{
 
     const [logado, setLogado] = useState(false);
 
     const navigate = useNavigate();
-
-    const [todasDenuncias, setTodasDenuncias] = useState([]);
-
-    const [denuncias, setDenuncias] = useState([]);
 
     useEffect(() => {
 
@@ -36,6 +43,29 @@ export default function HomePageAdmin() {
     }, []);
 
     useEffect(() => {
+
+        const carregarDepartamentos = async () => {
+            try {
+
+                const { data } = await axios.get(
+                    "https://prefeitura-mais-api-production.up.railway.app/departamentos"
+                );
+
+                setTodosDepartamentos(data);
+                setDepartamento(data);
+
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        carregarDepartamentos();
+
+    }, []);
+
+        
+
+    useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
             setLogado(true)
@@ -43,7 +73,7 @@ export default function HomePageAdmin() {
     }, [])
 
     const departamentoButton = () => {
-        navigate('/admin/departamentos');
+        navigate('/admin/criar-departamento');
     }
 
     const logOut = () => {
@@ -81,6 +111,10 @@ export default function HomePageAdmin() {
                     <h1 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Denuncias</h1>
 
                     <Denuncias denuncias={denuncias} />
+
+                    <h1 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Departamentos</h1>
+
+                    <Departamento departamentos={departamentos} />
 
                 </main>
 

@@ -24,6 +24,7 @@ function Denuncias({ denuncias }) {
                     status={denuncia.status}
                     endereco={denuncia.endereco}
                     usuario={denuncia.usuario?.nome || "Anônimo"}
+                    tipo_denuncia={denuncia.tipo}
                 />
 
             ))}

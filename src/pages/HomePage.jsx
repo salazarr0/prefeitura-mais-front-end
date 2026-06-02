@@ -4,15 +4,9 @@ import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function HomePage() {
+function HomePage({todasDenuncias, setTodasDenuncias, denuncias, setDenuncias}) {
 
     const [logado, setLogado] = useState(false);
-
-
-    const [todasDenuncias, setTodasDenuncias] = useState([]);
-
-
-    const [denuncias, setDenuncias] = useState([]);
 
     const navigate = useNavigate();
 
@@ -127,7 +121,7 @@ function HomePage() {
                         Denúncias
                     </h1>
 
-                    <Denuncias denuncias={denuncias} />
+                    <Denuncias denuncias={denuncias}/>
 
                 </main>
 
