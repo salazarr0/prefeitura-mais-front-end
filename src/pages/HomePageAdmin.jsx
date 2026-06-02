@@ -1,6 +1,5 @@
 import BarraDePesquisa from "../components/BarraDePesquisa";
 import Denuncias from "../components/Denuncias";
-import PerfilPage from "./PerfilPage";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -20,6 +19,8 @@ export default function HomePageAdmin({
     const [logado, setLogado] = useState(false);
 
     const navigate = useNavigate();
+
+    const [tipoPesquisa, setTipoPesquisa] = useState("denuncias");
 
     useEffect(() => {
 
@@ -91,18 +92,46 @@ export default function HomePageAdmin({
             <div className=" min-h-screen bg-gray-50 py-8 px-4">
                 <div className="max-w-5xl mx-auto">
 
-                    <header className="flex items-center justify-between bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
+                    <header className="flex flex-col lg:flex-row gap-4 items-center justify-between bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
 
-                        <h1 className="text-2xl md:text-3xl font-extrabold text-blue-700 tracking-tight">Prefeitura Mais ADM</h1>
+                        <h1 className="text-2xl md:text-3xl font-extrabold text-blue-700 tracking-tight whitespace-nowrap">Prefeitura Mais ADM</h1>
 
-                        <BarraDePesquisa
-                            denuncias={todasDenuncias}
-                            setResultado={setDenuncias}
+                        <BarraDePesquisa className="w-full lg:max-w-md"
+                            dados={
+                                tipoPesquisa === "denuncias"
+                                    ? todasDenuncias
+                                    : todosDepartamentos
+                            }
+                            setResultado={
+                                tipoPesquisa === "denuncias"
+                                    ? setDenuncias
+                                    : setDepartamento
+                            }
+                            tipoPesquisa={tipoPesquisa}
                         />
 
-                        <div className="flex gap-3">
+                        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 w-full lg:w-auto">
                             <>
-                                <button onClick={departamentoButton} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">departamentos</button>
+                                <button
+                                    onClick={() => setTipoPesquisa("denuncias")}
+                                    className={`px-4 py-2 rounded-lg ${tipoPesquisa === "denuncias"
+                                        ? "bg-blue-600 text-white"
+                                        : "bg-gray-200"
+                                        }`}
+                                >
+                                    Denúncias
+                                </button>
+
+                                <button
+                                    onClick={() => setTipoPesquisa("departamentos")}
+                                    className={`px-4 py-2 rounded-lg ${tipoPesquisa === "departamentos"
+                                        ? "bg-green-600 text-white"
+                                        : "bg-gray-200"
+                                        }`}
+                                >
+                                    Departamentos
+                                </button>
+                                <button onClick={departamentoButton} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">Criar departamentos</button>
                                 <button onClick={logOut} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">logout</button>
                                 <button onClick={perfilButton} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">perfil</button>
                             </>
@@ -112,15 +141,26 @@ export default function HomePageAdmin({
 
                 </div>
 
-                <main className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h1 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Denuncias</h1>
+                <main className="max-w-5xl mx-auto bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    {tipoPesquisa === "denuncias" && (
+                        <>
+                            <h1 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">
+                                Denúncias
+                            </h1>
 
-                    <Denuncias denuncias={denuncias} />
+                            <Denuncias denuncias={denuncias} />
+                        </>
+                    )}
 
-                    <h1 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Departamentos</h1>
+                    {tipoPesquisa === "departamentos" && (
+                        <>
+                            <h1 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">
+                                Departamentos
+                            </h1>
 
-                    <Departamento departamentos={departamentos} />
-
+                            <Departamento departamentos={departamentos} />
+                        </>
+                    )}
                 </main>
 
 
