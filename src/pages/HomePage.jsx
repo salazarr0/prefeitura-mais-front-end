@@ -5,10 +5,15 @@ import { useState, useEffect } from "react";
 
 
 import axios from "axios";
+import SideBar from "../components/SideBar";
 
 function HomePage({ todasDenuncias, setTodasDenuncias, denuncias, setDenuncias }) {
 
     const [logado, setLogado] = useState(false);
+
+    const [tipoPesquisa, setTipoPesquisa] = useState("denuncias");
+
+    const [pathsSidebar, setPathsSidebar] = useState([]);
 
     const navigate = useNavigate();
 
@@ -43,6 +48,25 @@ function HomePage({ todasDenuncias, setTodasDenuncias, denuncias, setDenuncias }
 
     }, []);
 
+    useEffect(() => {
+        if (logado) {
+            setPathsSidebar([
+                { id: 1, path: "/", nome: "home", onClick: homeButton },
+                { id: 2, path: "/", nome: "logout", onClick: logOut },
+                { id: 3, path: "/perfil", nome: "meu perfil", onClick: perfilButton }
+
+            ])
+        }
+        else {
+            setPathsSidebar([
+                { id: 1, path: "/", nome: "home", onClick: homeButton },
+                { id: 2, path: "/login", nome: "login", onClick: loginButton },
+                { id: 3, path: "/registro", nome: "registrar", onClick: registerButton }
+
+            ])
+        }
+    }, [logado]);
+
     const denunciaButton = () => {
         navigate("/postar-denuncia");
     };
@@ -65,6 +89,11 @@ function HomePage({ todasDenuncias, setTodasDenuncias, denuncias, setDenuncias }
         navigate("/perfil");
     };
 
+    const homeButton = () => {
+        navigate("/");
+    }
+
+
 
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4">
@@ -76,53 +105,25 @@ function HomePage({ todasDenuncias, setTodasDenuncias, denuncias, setDenuncias }
                     <h1 className="text-2xl md:text-3xl font-extrabold text-blue-700 tracking-tight">
                         Prefeitura Mais
                     </h1>
-
+                    <SideBar pathsSidebar={pathsSidebar} />
                     <BarraDePesquisa
-                        denuncias={todasDenuncias}
-                        setResultado={setDenuncias}
+                        dados={
+                            todasDenuncias
+                        }
+                        setResultado={
+                            setDenuncias
+                        }
+                        tipoPesquisa={tipoPesquisa}
                     />
 
                     <div className="flex gap-3">
 
-                        {logado ? (
-                            <>
-                                <button
-                                    onClick={denunciaButton}
-                                    className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                                >
-                                    postar denúncia
-                                </button>
-
-                                <button
-                                    onClick={logOut}
-                                    className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                                >
-                                    logout
-                                </button>
-
-                                <button onClick={perfilButton}
-                                    className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-                                    perfil
-                                </button>
-
-                            </>
-                        ) : (
-                            <>
-                                <button
-                                    onClick={registerButton}
-                                    className="px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100"
-                                >
-                                    registrar
-                                </button>
-
-                                <button
-                                    onClick={loginButton}
-                                    className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                                >
-                                    login
-                                </button>
-                            </>
-                        )}
+                        <button
+                            onClick={denunciaButton}
+                            className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                        >
+                            postar denúncia
+                        </button>
 
                     </div>
 

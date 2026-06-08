@@ -15,7 +15,11 @@ export default function BarraDePesquisa({
         const filtrados = dados.filter((item) => {
 
             if (tipoPesquisa === "denuncias") {
-                return item.titulo
+                return item.titulo 
+                    ?.toLowerCase()
+                    .includes(pesquisa.toLowerCase()) 
+                    || 
+                item.endereco 
                     ?.toLowerCase()
                     .includes(pesquisa.toLowerCase());
             }
