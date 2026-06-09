@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 import SideBar from "../components/SideBar";
+import { jwtDecode } from "jwt-decode";
 
 function HomePage({ todasDenuncias, setTodasDenuncias, denuncias, setDenuncias }) {
 
@@ -39,33 +40,47 @@ function HomePage({ todasDenuncias, setTodasDenuncias, denuncias, setDenuncias }
     }, []);
 
     useEffect(() => {
-
         const token = localStorage.getItem("token");
-
         if (token) {
             setLogado(true);
         }
-
     }, []);
 
-    useEffect(() => {
+     useEffect(() => {
         if (logado) {
-            setPathsSidebar([
+            const token = localStorage.getItem("token");
+            let isFuncionario = false;
+            try {
+                if (token) {
+                    const decoded = jwtDecode(token);
+                    if (decoded.papel === "funcionario") {
+                        isFuncionario = true;
+                    }
+                }
+            } catch (error) {
+                console.error("Erro ao decodificar token", error);
+            }
+
+            const paths = [
                 { id: 1, path: "/", nome: "home", onClick: homeButton },
                 { id: 2, path: "/", nome: "logout", onClick: logOut },
                 { id: 3, path: "/perfil", nome: "meu perfil", onClick: perfilButton }
+            ];
 
-            ])
+            if (isFuncionario) {
+                paths.push({ id: 4, path: "/funcionario/dashboard", nome: "meu dashboard", onClick: () => navigate("/funcionario/dashboard") });
+            }
+
+            setPathsSidebar(paths);
         }
         else {
             setPathsSidebar([
                 { id: 1, path: "/", nome: "home", onClick: homeButton },
                 { id: 2, path: "/login", nome: "login", onClick: loginButton },
                 { id: 3, path: "/registro", nome: "registrar", onClick: registerButton }
-
-            ])
+            ]);
         }
-    }, [logado]);
+    }, [logado, navigate]);
 
     const denunciaButton = () => {
         navigate("/postar-denuncia");

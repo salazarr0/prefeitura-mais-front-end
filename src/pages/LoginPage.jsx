@@ -25,7 +25,7 @@ export default function LoginPage() {
             const token = localStorage.getItem("token")
             const userPayload = jwtDecode(token)
             console.log("Login efetuado com sucesso")
-            const path = userPayload.papel == 'funcionario'? '/admin':'/'
+            const path = userPayload.papel == 'adm'? '/admin':'/'
             navigate(path)
 
         } catch (error) {
