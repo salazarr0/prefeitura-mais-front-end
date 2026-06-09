@@ -41,40 +41,82 @@ export default function PerfilPage() {
 
     if (email === "admin@prefeitura.gov.br") {
         return (
-            <div>
-                <h1>Nome: {nome} <img src="https://cdn-icons-png.flaticon.com/128/7542/7542190.png" className="w-8 h-8"></img></h1>
-                <h1>Email: {email}</h1>
-                <h1>Papel: {papel}</h1>
+            <div className="min-h-screen bg-gray-50 py-8 px-4">
+                <div className="max-w-5xl mx-auto">
 
-                <h3>Minhas Denuncias</h3>
-                <div className="flex gap-2 my-4">
-                    {["Todos", "Pendente", "Em Andamento", "Resolvido"].map((status) => (
-                        <button
-                            key={status}
-                            onClick={() => setFiltroStatus(status)}
-                            className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-all border cursor-pointer ${filtroStatus === status
-                                ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
-                                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
-                                }`}
-                        >
-                            {status}
-                        </button>
-                    ))}
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {denunciasFiltradas.map((denuncia) => (
-                        <CardDenuncia
-                            key={denuncia.id}
-                            id={denuncia.id}
-                            titulo={denuncia.titulo}
-                            descricao={denuncia.descricao}
-                            status={denuncia.status}
-                            endereco={denuncia.endereco}
-                            tipo_denuncia={denuncia.tipo}
-                            votosIniciais={denuncia.votos || 0}
-                        />
+                    <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
 
-                    ))}
+                        <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-4">
+                            <h1 className="text-2xl md:text-3xl font-extrabold text-blue-700">
+                                Meu Perfil
+                            </h1>
+
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/128/7542/7542190.png"
+                                className="w-8 h-8"
+                            ></img>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                            <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl">
+                                <h1 className="text-sm text-gray-500 font-semibold mb-1">Nome</h1>
+                                <p className="text-gray-800 font-bold">{nome}</p>
+                            </div>
+
+                            <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl">
+                                <h1 className="text-sm text-gray-500 font-semibold mb-1">Email</h1>
+                                <p className="text-gray-800 font-bold break-words">{email}</p>
+                            </div>
+
+                            <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl">
+                                <h1 className="text-sm text-gray-500 font-semibold mb-1">Papel</h1>
+                                <p className="text-gray-800 font-bold">{papel}</p>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+
+                        <h3 className="text-xl font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">
+                            Minhas Denuncias
+                        </h3>
+
+                        <div className="flex flex-wrap gap-2 my-4">
+                            {["Todos", "Pendente", "Em Andamento", "Resolvido"].map((status) => (
+                                <button
+                                    key={status}
+                                    onClick={() => setFiltroStatus(status)}
+                                    className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-all border cursor-pointer ${filtroStatus === status
+                                        ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
+                                        : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                                        }`}
+                                >
+                                    {status}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {denunciasFiltradas.map((denuncia) => (
+                                <CardDenuncia
+                                    key={denuncia.id}
+                                    id={denuncia.id}
+                                    titulo={denuncia.titulo}
+                                    descricao={denuncia.descricao}
+                                    status={denuncia.status}
+                                    endereco={denuncia.endereco}
+                                    tipo_denuncia={denuncia.tipo}
+                                    votosIniciais={denuncia.votos || 0}
+                                />
+
+                            ))}
+
+                        </div>
+
+                    </section>
 
                 </div>
             </div>
@@ -88,44 +130,81 @@ export default function PerfilPage() {
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4">
             <div className="max-w-5xl mx-auto">
-                <button onClick={backButton}>Voltar</button>
-                <div>
-                    <h1>Nome: {nome}</h1>
-                    <h1>Email: {email}</h1>
-                    <h1>Papel: {papel}</h1>
 
-                    <h3>Minhas Denuncias</h3>
-                    <div className="flex gap-2 my-4">
-                    {["Todos", "Pendente", "Em Andamento", "Resolvido"].map((status) => (
-                        <button
-                            key={status}
-                            onClick={() => setFiltroStatus(status)}
-                            className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-all border cursor-pointer ${filtroStatus === status
-                                ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
-                                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
-                                }`}
-                        >
-                            {status}
-                        </button>
-                    ))}
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {denunciasFiltradas.map((denuncia) => (
-                        <CardDenuncia
-                            key={denuncia.id}
-                            id={denuncia.id}
-                            titulo={denuncia.titulo}
-                            descricao={denuncia.descricao}
-                            status={denuncia.status}
-                            endereco={denuncia.endereco}
-                            tipo_denuncia={denuncia.tipo}
-                            votosIniciais={denuncia.votos || 0}
-                        />
+                <button
+                    onClick={backButton}
+                    className="mb-6 px-4 py-2 text-sm font-semibold text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer shadow-sm"
+                >
+                    Voltar
+                </button>
 
-                    ))}
+                <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
+
+                    <h1 className="text-2xl md:text-3xl font-extrabold text-blue-700 border-b border-gray-200 pb-4 mb-4">
+                        Meu Perfil
+                    </h1>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                        <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl">
+                            <h1 className="text-sm text-gray-500 font-semibold mb-1">Nome</h1>
+                            <p className="text-gray-800 font-bold">{nome}</p>
+                        </div>
+
+                        <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl">
+                            <h1 className="text-sm text-gray-500 font-semibold mb-1">Email</h1>
+                            <p className="text-gray-800 font-bold break-words">{email}</p>
+                        </div>
+
+                        <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl">
+                            <h1 className="text-sm text-gray-500 font-semibold mb-1">Papel</h1>
+                            <p className="text-gray-800 font-bold">{papel}</p>
+                        </div>
 
                     </div>
-                </div>
+
+                </section>
+
+                <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+
+                    <h3 className="text-xl font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">
+                        Minhas Denuncias
+                    </h3>
+
+                    <div className="flex flex-wrap gap-2 my-4">
+                        {["Todos", "Pendente", "Em Andamento", "Resolvido"].map((status) => (
+                            <button
+                                key={status}
+                                onClick={() => setFiltroStatus(status)}
+                                className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-all border cursor-pointer ${filtroStatus === status
+                                    ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
+                                    : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                                    }`}
+                            >
+                                {status}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {denunciasFiltradas.map((denuncia) => (
+                            <CardDenuncia
+                                key={denuncia.id}
+                                id={denuncia.id}
+                                titulo={denuncia.titulo}
+                                descricao={denuncia.descricao}
+                                status={denuncia.status}
+                                endereco={denuncia.endereco}
+                                tipo_denuncia={denuncia.tipo}
+                                votosIniciais={denuncia.votos || 0}
+                            />
+
+                        ))}
+
+                    </div>
+
+                </section>
+
             </div>
         </div>
     )

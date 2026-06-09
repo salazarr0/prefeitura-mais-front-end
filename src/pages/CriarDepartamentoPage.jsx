@@ -104,83 +104,138 @@ export default function CriarDepartamentoPage() {
             }
         }
     }
+
     return (
         <>
-            <div className="flex flex-col items-center justify-center h-screen">
-                <h1>Criar departamento</h1>
-                <button className="border-2 border-gray-300 rounded-md cursor-pointer" onClick={() => navigate("/admin")}>Home</button>
-                <input type="nome"
-                    placeholder="nome"
-                    value={nome}
-                    className="border-2 border-gray-300 rounded-md cursor-pointer"
-                    onChange={(e) => setNome(e.target.value)}
-                />
-                {erroCampo.nome && <p className="text-red-500 text-sm mt-1">{erroCampo.nome}</p>}
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-8">
 
-                <div className="flex">
-                    <p>Das: </p>
+                <div className="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
 
-                    <input
-                        type="time"
-                        min="08:00"
-                        max="17:00"
-                        className="border-2 border-gray-300 rounded-md cursor-pointer"
-                        onChange={(e) => setHorario_funcionamentoInicio(e.target.value)}
-                    />
-                    <p> até as: </p>
-                    <input
-                        type="time"
-                        min="08:00"
-                        max="18:00"
-                        className="border-2 border-gray-300 rounded-md cursor-pointer"
-                        onChange={(e) => setHorario_funcionamentoTermino(e.target.value)}
-                    />
-                </div>
-                {erroCampo.horario_funcionamento && <p className="text-red-500 text-sm mt-1">{erroCampo.horario_funcionamento}</p>}
+                    <h1 className="text-3xl font-extrabold text-blue-700 text-center mb-6">
+                        Prefeitura Mais
+                    </h1>
 
-                <div className="flex">
-                    <p>De: </p>
-                    <select
-                        onChange={(e) => setDiaInicio(e.target.value)}
+                    <button
+                        className="w-full mb-4 py-2 text-sm font-semibold text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+                        onClick={() => navigate("/admin")}
                     >
-                        <option value="">Selecionar dia</option>
-                        {diasSem.map((dia) => (
-                            <option key={dia.id} value={dia.dia}>{dia.dia}</option>
-                        ))}
-                    </select>
-                    <p> à: </p>
-                    <select
-                        onChange={(e) => setDiaTermino(e.target.value)}
-                    >
-                        <option value="">Selecionar dia</option>
-                        {diasSem.map((dia) => (
-                            <option key={dia.id} value={dia.dia}>{dia.dia}</option>
-                        ))}
-                    </select>
+                        Home
+                    </button>
+
+                    <h2 className="text-xl font-bold text-gray-800 text-center mb-6">
+                        Criar departamento
+                    </h2>
+
+                    <div className="flex flex-col gap-4">
+
+                        <div>
+                            <input
+                                type="nome"
+                                placeholder="Nome"
+                                value={nome}
+                                className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                onChange={(e) => setNome(e.target.value)}
+                            />
+                            {erroCampo.nome && <p className="text-red-500 text-sm mt-1">{erroCampo.nome}</p>}
+                        </div>
+
+                        <div>
+                            <div className="flex flex-col md:flex-row items-start md:items-center gap-3 bg-gray-50 border border-gray-100 rounded-xl p-4">
+
+                                <p className="text-sm font-semibold text-gray-600">Das:</p>
+
+                                <input
+                                    type="time"
+                                    min="08:00"
+                                    max="17:00"
+                                    className="w-full md:w-auto px-4 py-2 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                                    onChange={(e) => setHorario_funcionamentoInicio(e.target.value)}
+                                />
+
+                                <p className="text-sm font-semibold text-gray-600">até as:</p>
+
+                                <input
+                                    type="time"
+                                    min="08:00"
+                                    max="18:00"
+                                    className="w-full md:w-auto px-4 py-2 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                                    onChange={(e) => setHorario_funcionamentoTermino(e.target.value)}
+                                />
+
+                            </div>
+
+                            {erroCampo.horario_funcionamento && <p className="text-red-500 text-sm mt-1">{erroCampo.horario_funcionamento}</p>}
+                        </div>
+
+                        <div className="flex flex-col md:flex-row items-start md:items-center gap-3 bg-gray-50 border border-gray-100 rounded-xl p-4">
+
+                            <p className="text-sm font-semibold text-gray-600">De:</p>
+
+                            <select
+                                onChange={(e) => setDiaInicio(e.target.value)}
+                                className="w-full md:flex-1 px-4 py-2 border border-gray-200 rounded-lg bg-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                            >
+                                <option value="">Selecionar dia</option>
+                                {diasSem.map((dia) => (
+                                    <option key={dia.id} value={dia.dia}>{dia.dia}</option>
+                                ))}
+                            </select>
+
+                            <p className="text-sm font-semibold text-gray-600">à:</p>
+
+                            <select
+                                onChange={(e) => setDiaTermino(e.target.value)}
+                                className="w-full md:flex-1 px-4 py-2 border border-gray-200 rounded-lg bg-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                            >
+                                <option value="">Selecionar dia</option>
+                                {diasSem.map((dia) => (
+                                    <option key={dia.id} value={dia.dia}>{dia.dia}</option>
+                                ))}
+                            </select>
+
+                        </div>
+
+                        <div>
+                            <input
+                                type="endereco"
+                                placeholder="Endereço"
+                                value={endereco}
+                                className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                onChange={(e) => setEndereco(e.target.value)}
+                            />
+                            {erroCampo.endereco && <p className="text-red-500 text-sm mt-1">{erroCampo.endereco}</p>}
+                        </div>
+
+                        <div>
+                            <select
+                                onChange={(e) => setGerente_id(Number(e.target.value))}
+                                className="w-full px-4 py-3 border border-gray-200 rounded-lg bg-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 cursor-pointer"
+                            >
+                                <option value="">Selecionar gerente</option>
+                                {usuarios.map((usuario) => (
+                                    usuario.papel == 'funcionario' && <option key={usuario.id} value={usuario.id}>{usuario.nome}</option>
+                                ))}
+                            </select>
+                            {erroCampo.gerente_id && <p className="text-red-500 text-sm mt-1">{erroCampo.gerente_id}</p>}
+                        </div>
+
+                        <button
+                            onClick={handleCriarDepartamento}
+                            className="w-full py-3 text-white font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+                        >
+                            Criar Departamento
+                        </button>
+
+                        {mensagem && (
+                            <div className="w-full p-3 text-sm text-center text-red-700 bg-red-100 border border-red-300 rounded-lg">
+                                {mensagem}
+                            </div>
+                        )}
+
+                    </div>
+
                 </div>
-                <input type="endereco"
-                    placeholder="Endereço"
-                    value={endereco}
-                    className="border-2 border-gray-300 rounded-md cursor-pointer"
-                    onChange={(e) => setEndereco(e.target.value)}
-                />
-                {erroCampo.endereco && <p className="text-red-500 text-sm mt-1">{erroCampo.endereco}</p>}
 
-
-                <select
-                    onChange={(e) => setGerente_id(Number(e.target.value))}
-                >
-                    <option value="">Selecionar gerente</option>
-                    {usuarios.map((usuario) => (
-                        usuario.papel == 'funcionario' && <option key={usuario.id} value={usuario.id}>{usuario.nome}</option>
-                    ))}
-                </select>
-                {erroCampo.gerente_id && <p className="text-red-500 text-sm mt-1">{erroCampo.gerente_id}</p>}
-                <button onClick={handleCriarDepartamento} className="border-2 border-green-300 rounded-md cursor-pointer">Criar Departamento</button>
-                {mensagem && (
-                    <div className="w-64 p-3 text-sm text-center text-red-700 bg-red-100 border border-red-400 rounded-md">
-                        {mensagem}
-                    </div>)}
             </div>
         </>
     )
