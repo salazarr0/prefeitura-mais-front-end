@@ -19,6 +19,7 @@ function Denuncias({ denuncias }) {
 
                 <CardDenuncia
                     key={denuncia.id}
+                    id={denuncia.id}
                     titulo={denuncia.titulo}
                     descricao={denuncia.descricao}
                     status={denuncia.status}

@@ -1,19 +1,52 @@
-import { useState } from "react"
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
-function CardDenuncia({ titulo, descricao, endereco, status, usuario, tipo_denuncia, votosIniciais = 0 }) {
+function CardDenuncia({ id, titulo, descricao, endereco, status, usuario, tipo_denuncia, votosIniciais = 0 }) {
 
-    const [contador, setContador] = useState(votosIniciais)
-    const [confirmado, setConfirmado] = useState(false)
+    const [contador, setContador] = useState(votosIniciais);
+    const [confirmado, setConfirmado] = useState(false);
+    const navigate = useNavigate();
 
-    const handleConfirmar = () => {
-        if (confirmado) {
-            setContador(contador - 1)
-            setConfirmado(false)
-        } else {
-            setContador(contador + 1)
-            setConfirmado(true)
+    useEffect(() => {
+        const fetchStatus = async () => {
+            if (!id) return;
+            try {
+                const token = localStorage.getItem("token");
+                const { data } = await axios.get(`https://prefeitura-mais-api-production.up.railway.app/confirmacoes/${id}/status`, {
+                    headers: token ? { Authorization: `Bearer ${token}` } : {}
+                });
+                setContador(data.count);
+            } catch (error) {
+                console.log("Erro ao carregar status da denúncia", error);
+            }
+        };
+        fetchStatus();
+    }, [id]);
+
+    const handleConfirmar = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("Você precisa estar logado para confirmar um problema.");
+                return;
+            }
+
+            const { data } = await axios.post(`https://prefeitura-mais-api-production.up.railway.app/confirmacoes/${id}`, {}, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            setConfirmado(data.confirmed);
+            if (data.confirmed) {
+                setContador(prev => prev + 1);
+            } else {
+                setContador(prev => prev - 1);
+            }
+        } catch (error) {
+            console.log("Erro ao confirmar problema", error);
+            alert("Erro ao confirmar problema.");
         }
-    }
+    };
 
 
     return (
@@ -32,19 +65,26 @@ function CardDenuncia({ titulo, descricao, endereco, status, usuario, tipo_denun
             </div>
 
             <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-                    <button
-                        onClick={handleConfirmar}
-                        className={`px-4 py-2 rounded-lg transition-colors cursor-pointer font-medium text-sm border ${confirmado
-                            ? 'bg-green-50 border-green-200 text-green-700 hover:bg-green-100'
-                            : 'bg-blue-600 border-blue-600 text-white hover:bg-blue-700'
-                            }`}
+                <button
+                    onClick={handleConfirmar}
+                    className={`px-4 py-2 rounded-lg transition-colors cursor-pointer font-medium text-sm border ${confirmado
+                        ? 'bg-green-50 border-green-200 text-green-700 hover:bg-green-100'
+                        : 'bg-blue-600 border-blue-600 text-white hover:bg-blue-700'
+                        }`}
+                >
+                    {confirmado ? 'Confirmado ✓' : 'Confirmar Problema'}
+                </button>
+                <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-gray-600 bg-gray-50 px-3 py-1 rounded-full border border-gray-150">
+                        {contador} {contador === 1 ? 'apoio' : 'apoios'}
+                    </span>
+                    <button 
+                        onClick={() => navigate(`/denuncias/${id}`)}
+                        className="text-blue-600 hover:text-blue-800 text-sm font-semibold underline cursor-pointer"
                     >
-                        {confirmado ? 'Confirmado ✓' : 'Confirmar Problema'}
+                        Ver Detalhes
                     </button>
-                <span className="text-sm font-semibold text-gray-600 bg-gray-50 px-3 py-1 rounded-full border border-gray-150">
-                    {contador} {contador === 1 ? 'apoio' : 'apoios'}
-                </span>
-
+                </div>
             </div>
 
 

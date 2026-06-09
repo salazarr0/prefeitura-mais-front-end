@@ -122,6 +122,26 @@ export default function DashboardPage() {
         return s ? s.contagem : 0;
     };
 
+    const handlePriorityChange = async (denunciaId, newPrioridade) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.patch(`https://prefeitura-mais-api-production.up.railway.app/denuncias/${denunciaId}/prioridade`, 
+        { prioridade: Number(newPrioridade) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      setFila(prevFila => 
+        prevFila.map(d => 
+          d.id === denunciaId ? { ...d, prioridade: Number(newPrioridade) } : d
+        ).sort((a, b) => Number(b.prioridade) - Number(a.prioridade)) 
+      );
+      alert('Prioridade atualizada com sucesso!');
+    } catch (error) {
+      console.error('Erro ao atualizar prioridade:', error);
+      alert('Falha ao atualizar prioridade.');
+    }
+  };
+
     const pendentes = getContagemStatus("Pendente");
     const emAnalise = getContagemStatus("Em análise");
     const resolvidas = getContagemStatus("Resolvido");
@@ -231,7 +251,7 @@ export default function DashboardPage() {
                                                     {denuncia.status}
                                                 </span>
                                             </td>
-                                            <td className="p-4">
+                                            <td className="p-4 space-y-2">
                                                 <select 
                                                     className="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                                     value={denuncia.status}
@@ -240,6 +260,15 @@ export default function DashboardPage() {
                                                     <option value="Pendente">Pendente</option>
                                                     <option value="Em análise">Em análise</option>
                                                     <option value="Resolvido">Resolvido</option>
+                                                </select>
+                                                <select 
+                                                    className="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+                                                    value={denuncia.prioridade || 1}
+                                                    onChange={(e) => handlePriorityChange(denuncia.id, e.target.value)}
+                                                >
+                                                    <option value="1">Baixa (1)</option>
+                                                    <option value="2">Média (2)</option>
+                                                    <option value="3">Alta (3)</option>
                                                 </select>
                                             </td>
                                         </tr>

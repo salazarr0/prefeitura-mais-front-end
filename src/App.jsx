@@ -8,6 +8,8 @@ import PostarDenunciaPage from './pages/PostarDenunciaPage.jsx';
 import HomePageAdmin from './pages/HomePageAdmin.jsx';
 import CriarDepartamentoPage from './pages/CriarDepartamentoPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
+import MinhasDenunciasPage from './pages/MinhasDenunciasPage.jsx';
+import DenunciaDetalhesPage from './pages/DenunciaDetalhesPage.jsx';
 
 function App() {
   const [todasDenuncias, setTodasDenuncias] = useState([]);
@@ -45,6 +47,8 @@ function App() {
           <Route path="/admin/criar-departamento" element={< CriarDepartamentoPage />} />
           <Route path="/funcionario/dashboard" element={<DashboardPage />} />
           <Route path="/perfil" element={< PerfilPage />} />
+          <Route path="/minhas-denuncias" element={< MinhasDenunciasPage />} />
+          <Route path="/denuncias/:id" element={< DenunciaDetalhesPage />} />
         </Routes>
 
       </BrowserRouter>

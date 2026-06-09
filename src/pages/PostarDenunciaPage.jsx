@@ -45,7 +45,6 @@ function PostarDenunciaPage() {
                 endereco_denuncia: endereco_denuncia,
                 tipo_denuncia_id: tipo_denuncia_id
             }
-
             const resposta = await axios.post(
                 "https://prefeitura-mais-api-production.up.railway.app/denuncias",
                 dadosDaDenuncia,
