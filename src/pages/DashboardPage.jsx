@@ -11,6 +11,8 @@ export default function DashboardPage() {
     const [estatisticas, setEstatisticas] = useState(null);
     const [fila, setFila] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [filtroBusca, setFiltroBusca] = useState("");
+    const [filtroStatus, setFiltroStatus] = useState("Todos");
 
     const [pathsSidebar, setPathsSidebar] = useState([
         { id: 1, nome: "Voltar para Home", onClick: () => navigate("/") },
@@ -203,9 +205,30 @@ export default function DashboardPage() {
                 </div>
 
                 <main className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div className="p-6 border-b border-gray-100">
-                        <h2 className="text-xl font-bold text-gray-800">Fila de Denúncias</h2>
-                        <p className="text-sm text-gray-500 mt-1">Denúncias ordenadas por prioridade.</p>
+                    <div className="p-6 border-b border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 className="text-xl font-bold text-gray-800">Fila de Denúncias</h2>
+                            <p className="text-sm text-gray-500 mt-1">Denúncias ordenadas por prioridade.</p>
+                        </div>
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <input 
+                                type="text" 
+                                placeholder="Buscar por título ou endereço..." 
+                                className="px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-100"
+                                value={filtroBusca}
+                                onChange={(e) => setFiltroBusca(e.target.value)}
+                            />
+                            <select 
+                                className="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                                value={filtroStatus}
+                                onChange={(e) => setFiltroStatus(e.target.value)}
+                            >
+                                <option value="Todos">Todos os Status</option>
+                                <option value="Pendente">Pendente</option>
+                                <option value="Em análise">Em análise</option>
+                                <option value="Resolvido">Resolvido</option>
+                            </select>
+                        </div>
                     </div>
                     
                     <div className="overflow-x-auto">
@@ -216,17 +239,30 @@ export default function DashboardPage() {
                                     <th className="p-4 font-semibold border-b">Título & Tipo</th>
                                     <th className="p-4 font-semibold border-b">Endereço</th>
                                     <th className="p-4 font-semibold border-b">Prioridade</th>
+                                    <th className="p-4 font-semibold border-b">Apoios</th>
                                     <th className="p-4 font-semibold border-b">Status</th>
                                     <th className="p-4 font-semibold border-b">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {fila.length === 0 ? (
+                                {fila
+                                    .filter(d => filtroStatus === "Todos" || d.status === filtroStatus)
+                                    .filter(d => 
+                                        d.titulo.toLowerCase().includes(filtroBusca.toLowerCase()) || 
+                                        d.endereco_denuncia.toLowerCase().includes(filtroBusca.toLowerCase())
+                                    )
+                                    .length === 0 ? (
                                     <tr>
-                                        <td colSpan="6" className="p-8 text-center text-gray-500">Nenhuma denúncia na fila. Bom trabalho!</td>
+                                        <td colSpan="7" className="p-8 text-center text-gray-500">Nenhuma denúncia encontrada com os filtros atuais.</td>
                                     </tr>
                                 ) : (
-                                    fila.map(denuncia => (
+                                    fila
+                                    .filter(d => filtroStatus === "Todos" || d.status === filtroStatus)
+                                    .filter(d => 
+                                        d.titulo.toLowerCase().includes(filtroBusca.toLowerCase()) || 
+                                        d.endereco_denuncia.toLowerCase().includes(filtroBusca.toLowerCase())
+                                    )
+                                    .map(denuncia => (
                                         <tr key={denuncia.id} className="hover:bg-gray-50 transition-colors border-b last:border-0">
                                             <td className="p-4 text-sm text-gray-600">#{denuncia.id}</td>
                                             <td className="p-4">
@@ -241,6 +277,9 @@ export default function DashboardPage() {
                                                 {denuncia.prioridade === 2 && <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full">Média</span>}
                                                 {denuncia.prioridade === 1 && <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Baixa</span>}
                                                 {(!denuncia.prioridade || denuncia.prioridade < 1 || denuncia.prioridade > 3) && <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">N/D</span>}
+                                            </td>
+                                            <td className="p-4 text-sm text-gray-800 font-bold">
+                                                {denuncia.votos || 0}
                                             </td>
                                             <td className="p-4">
                                                 <span className={`px-2 py-1 text-xs font-bold rounded-full ${
@@ -270,6 +309,12 @@ export default function DashboardPage() {
                                                     <option value="2">Média (2)</option>
                                                     <option value="3">Alta (3)</option>
                                                 </select>
+                                                <button 
+                                                    onClick={() => navigate(`/denuncias/${denuncia.id}`)}
+                                                    className="w-full mt-2 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded transition-colors"
+                                                >
+                                                    Ver Detalhes
+                                                </button>
                                             </td>
                                         </tr>
                                     ))

@@ -10,7 +10,7 @@ import { jwtDecode } from "jwt-decode";
 
 function HomePage({ todasDenuncias, setTodasDenuncias, denuncias, setDenuncias }) {
 
-    const [logado, setLogado] = useState(false);
+    const [logado, setLogado] = useState(true);
 
     const [tipoPesquisa, setTipoPesquisa] = useState("denuncias");
 
@@ -42,11 +42,11 @@ function HomePage({ todasDenuncias, setTodasDenuncias, denuncias, setDenuncias }
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            setLogado(true);
+            setLogado(false);
         }
     }, []);
 
-     useEffect(() => {
+    useEffect(() => {
         if (logado) {
             const token = localStorage.getItem("token");
             let isFuncionario = false;
