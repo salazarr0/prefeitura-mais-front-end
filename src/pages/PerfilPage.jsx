@@ -11,6 +11,11 @@ export default function PerfilPage() {
     const [denuncias, setDenuncias] = useState([])
     const navigate = useNavigate();
 
+    const [filtroStatus, setFiltroStatus] = useState("Todos")
+    const denunciasFiltradas = filtroStatus === "Todos"
+        ? denuncias
+        : denuncias.filter((denuncia) => denuncia.status === filtroStatus)
+
     const perfil = async () => {
         try {
             const token = localStorage.getItem("token")
@@ -42,15 +47,31 @@ export default function PerfilPage() {
                 <h1>Papel: {papel}</h1>
 
                 <h3>Minhas Denuncias</h3>
+                <div className="flex gap-2 my-4">
+                    {["Todos", "Pendente", "Em Andamento", "Resolvido"].map((status) => (
+                        <button
+                            key={status}
+                            onClick={() => setFiltroStatus(status)}
+                            className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-all border cursor-pointer ${filtroStatus === status
+                                ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
+                                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                                }`}
+                        >
+                            {status}
+                        </button>
+                    ))}
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {denuncias.map((denuncia) => (
+                    {denunciasFiltradas.map((denuncia) => (
                         <CardDenuncia
                             key={denuncia.id}
+                            id={denuncia.id}
                             titulo={denuncia.titulo}
                             descricao={denuncia.descricao}
                             status={denuncia.status}
                             endereco={denuncia.endereco}
                             tipo_denuncia={denuncia.tipo}
+                            votosIniciais={denuncia.votos || 0}
                         />
 
                     ))}
@@ -74,18 +95,34 @@ export default function PerfilPage() {
                     <h1>Papel: {papel}</h1>
 
                     <h3>Minhas Denuncias</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {denuncias.map((denuncia) => (
-                            <CardDenuncia
-                                key={denuncia.id}
-                                titulo={denuncia.titulo}
-                                descricao={denuncia.descricao}
-                                status={denuncia.status}
-                                endereco={denuncia.endereco}
-                                tipo_denuncia={denuncia.tipo}
-                            />
+                    <div className="flex gap-2 my-4">
+                    {["Todos", "Pendente", "Em Andamento", "Resolvido"].map((status) => (
+                        <button
+                            key={status}
+                            onClick={() => setFiltroStatus(status)}
+                            className={`px-3 py-1.5 text-sm font-semibold rounded-lg transition-all border cursor-pointer ${filtroStatus === status
+                                ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
+                                : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                                }`}
+                        >
+                            {status}
+                        </button>
+                    ))}
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {denunciasFiltradas.map((denuncia) => (
+                        <CardDenuncia
+                            key={denuncia.id}
+                            id={denuncia.id}
+                            titulo={denuncia.titulo}
+                            descricao={denuncia.descricao}
+                            status={denuncia.status}
+                            endereco={denuncia.endereco}
+                            tipo_denuncia={denuncia.tipo}
+                            votosIniciais={denuncia.votos || 0}
+                        />
 
-                        ))}
+                    ))}
 
                     </div>
                 </div>
