@@ -5,9 +5,6 @@ function CardDenuncia({ titulo, descricao, endereco, status, usuario, tipo_denun
     const [contador, setContador] = useState(votosIniciais)
     const [confirmado, setConfirmado] = useState(false)
 
-    const logado = localStorage.getItem("token");
-
-
     const handleConfirmar = () => {
         if (confirmado) {
             setContador(contador - 1)
@@ -35,7 +32,6 @@ function CardDenuncia({ titulo, descricao, endereco, status, usuario, tipo_denun
             </div>
 
             <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-                {logado && (
                     <button
                         onClick={handleConfirmar}
                         className={`px-4 py-2 rounded-lg transition-colors cursor-pointer font-medium text-sm border ${confirmado
@@ -45,7 +41,6 @@ function CardDenuncia({ titulo, descricao, endereco, status, usuario, tipo_denun
                     >
                         {confirmado ? 'Confirmado ✓' : 'Confirmar Problema'}
                     </button>
-                )}
                 <span className="text-sm font-semibold text-gray-600 bg-gray-50 px-3 py-1 rounded-full border border-gray-150">
                     {contador} {contador === 1 ? 'apoio' : 'apoios'}
                 </span>

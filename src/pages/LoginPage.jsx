@@ -25,7 +25,7 @@ export default function LoginPage() {
             const token = localStorage.getItem("token")
             const userPayload = jwtDecode(token)
             console.log("Login efetuado com sucesso")
-            const path = userPayload.papel == 'adm'? '/admin':'/'
+            const path = userPayload.papel == 'adm' ? '/admin' : '/'
             navigate(path)
 
         } catch (error) {
@@ -42,30 +42,59 @@ export default function LoginPage() {
             }
         }
     }
+
     return (
         <>
-            <div className="flex flex-col items-center justify-center h-screen">
-                <h1>login</h1>
-                <button className="border-2 border-gray-300 rounded-md cursor-pointer" onClick={() => navigate("/")}>Home</button>
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
 
-                {mensagem && (
-                    <div className="w-64 p-3 text-sm text-center text-red-700 bg-red-100 border border-red-400 rounded-md">
-                        {mensagem}
-                    </div>)}
+                <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
 
-                <input type="email"
-                    placeholder="email"
-                    value={email}
-                    className="border-2 border-gray-300 rounded-md cursor-pointer"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input type="password"
-                    placeholder="senha"
-                    value={senha}
-                    className="border-2 border-gray-300 rounded-md cursor-pointer"
-                    onChange={(e) => setSenha(e.target.value)}
-                />
-                <button onClick={handleLogin} className="border-2 border-green-300 rounded-md cursor-pointer">Login</button>
+                    <h1 className="text-3xl font-extrabold text-blue-700 text-center mb-6">
+                        Prefeitura Mais
+                    </h1>
+
+                    <button
+                        className="w-full mb-4 py-2 text-sm font-semibold text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+                        onClick={() => navigate("/")}
+                    >
+                        Home
+                    </button>
+
+                    {mensagem && (
+                        <div className="w-full mb-4 p-3 text-sm text-center text-red-700 bg-red-100 border border-red-300 rounded-lg">
+                            {mensagem}
+                        </div>
+                    )}
+
+                    <div className="flex flex-col gap-4">
+
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+
+                        <input
+                            type="password"
+                            placeholder="Senha"
+                            value={senha}
+                            className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                            onChange={(e) => setSenha(e.target.value)}
+                        />
+
+                        <button
+                            onClick={handleLogin}
+                            className="w-full py-3 text-white font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+                        >
+                            Login
+                        </button>
+
+                    </div>
+
+                </div>
+
             </div>
         </>
     )
