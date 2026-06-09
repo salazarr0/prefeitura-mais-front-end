@@ -25,6 +25,7 @@ function Denuncias({ denuncias }) {
                     endereco={denuncia.endereco}
                     usuario={denuncia.usuario?.nome || "Anônimo"}
                     tipo_denuncia={denuncia.tipo}
+                    votosIniciais={denuncia.votos || 0}
                 />
 
             ))}

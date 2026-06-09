@@ -1,4 +1,23 @@
-function CardDenuncia({ titulo, descricao, endereco, status, usuario, tipo_denuncia }) {
+import { useState } from "react"
+
+function CardDenuncia({ titulo, descricao, endereco, status, usuario, tipo_denuncia, votosIniciais = 0 }) {
+
+    const [contador, setContador] = useState(votosIniciais)
+    const [confirmado, setConfirmado] = useState(false)
+
+    const logado = localStorage.getItem("token");
+
+
+    const handleConfirmar = () => {
+        if (confirmado) {
+            setContador(contador - 1)
+            setConfirmado(false)
+        } else {
+            setContador(contador + 1)
+            setConfirmado(true)
+        }
+    }
+
 
     return (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-5 h-full flex flex-col">
@@ -14,9 +33,29 @@ function CardDenuncia({ titulo, descricao, endereco, status, usuario, tipo_denun
                 <p className="text-sm text-gray-500">Categoria: {tipo_denuncia}</p>
                 <p className="text-sm text-gray-500">{endereco}</p>
             </div>
+
+            <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                {logado && (
+                    <button
+                        onClick={handleConfirmar}
+                        className={`px-4 py-2 rounded-lg transition-colors cursor-pointer font-medium text-sm border ${confirmado
+                            ? 'bg-green-50 border-green-200 text-green-700 hover:bg-green-100'
+                            : 'bg-blue-600 border-blue-600 text-white hover:bg-blue-700'
+                            }`}
+                    >
+                        {confirmado ? 'Confirmado ✓' : 'Confirmar Problema'}
+                    </button>
+                )}
+                <span className="text-sm font-semibold text-gray-600 bg-gray-50 px-3 py-1 rounded-full border border-gray-150">
+                    {contador} {contador === 1 ? 'apoio' : 'apoios'}
+                </span>
+
+            </div>
+
+
         </div>
     )
 
 }
 
-export default CardDenuncia 
+export default CardDenuncia
