@@ -11,6 +11,10 @@ export default function PerfilPage() {
     const [estatisticas, setEstatisticas] = useState({ total: 0, pendente: 0, emAnalise: 0, resolvido: 0 });
     const navigate = useNavigate();
 
+    const backButton = () => {
+        navigate("/")
+    }
+
     const perfil = async () => {
         try {
             const token = localStorage.getItem("token")
@@ -40,6 +44,13 @@ export default function PerfilPage() {
         return (
             <div className="min-h-screen bg-gray-50 py-8 px-4">
                 <div className="max-w-5xl mx-auto">
+
+                    <button
+                        onClick={backButton}
+                        className="mb-6 px-4 py-2 text-sm font-semibold text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer shadow-sm"
+                    >
+                        Voltar
+                    </button>
 
                     <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
 
@@ -79,41 +90,42 @@ export default function PerfilPage() {
                         <h3 className="text-xl font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">
                             Minhas Estatísticas
                         </h3>
+
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                             <div className="bg-blue-50 text-blue-700 p-4 rounded-xl text-center border border-blue-100">
                                 <p className="text-3xl font-extrabold">{estatisticas.total}</p>
                                 <p className="text-sm font-semibold">Total Criadas</p>
                             </div>
+
                             <div className="bg-yellow-50 text-yellow-700 p-4 rounded-xl text-center border border-yellow-100">
                                 <p className="text-3xl font-extrabold">{estatisticas.pendente}</p>
                                 <p className="text-sm font-semibold">Pendentes</p>
                             </div>
+
                             <div className="bg-indigo-50 text-indigo-700 p-4 rounded-xl text-center border border-indigo-100">
                                 <p className="text-3xl font-extrabold">{estatisticas.emAnalise}</p>
                                 <p className="text-sm font-semibold">Em Análise</p>
                             </div>
+
                             <div className="bg-green-50 text-green-700 p-4 rounded-xl text-center border border-green-100">
                                 <p className="text-3xl font-extrabold">{estatisticas.resolvido}</p>
                                 <p className="text-sm font-semibold">Resolvidas</p>
                             </div>
                         </div>
+
                         <div className="mt-8 flex justify-center">
-                             <button
+                            <button
                                 onClick={() => navigate("/minhas-denuncias")}
                                 className="px-6 py-3 text-white font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm cursor-pointer"
-                             >
-                                 Ver Minhas Denúncias Detalhadas
-                             </button>
+                            >
+                                Ver Minhas Denúncias Detalhadas
+                            </button>
                         </div>
                     </section>
 
                 </div>
             </div>
         )
-    }
-
-    const backButton = () => {
-        navigate("/")
     }
 
     return (
@@ -158,31 +170,36 @@ export default function PerfilPage() {
                     <h3 className="text-xl font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">
                         Minhas Estatísticas
                     </h3>
+
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                         <div className="bg-blue-50 text-blue-700 p-4 rounded-xl text-center border border-blue-100">
                             <p className="text-3xl font-extrabold">{estatisticas.total}</p>
                             <p className="text-sm font-semibold">Total Criadas</p>
                         </div>
+
                         <div className="bg-yellow-50 text-yellow-700 p-4 rounded-xl text-center border border-yellow-100">
                             <p className="text-3xl font-extrabold">{estatisticas.pendente}</p>
                             <p className="text-sm font-semibold">Pendentes</p>
                         </div>
+
                         <div className="bg-indigo-50 text-indigo-700 p-4 rounded-xl text-center border border-indigo-100">
                             <p className="text-3xl font-extrabold">{estatisticas.emAnalise}</p>
                             <p className="text-sm font-semibold">Em Análise</p>
                         </div>
+
                         <div className="bg-green-50 text-green-700 p-4 rounded-xl text-center border border-green-100">
                             <p className="text-3xl font-extrabold">{estatisticas.resolvido}</p>
                             <p className="text-sm font-semibold">Resolvidas</p>
                         </div>
                     </div>
+
                     <div className="mt-8 flex justify-center">
-                            <button
+                        <button
                             onClick={() => navigate("/minhas-denuncias")}
                             className="px-6 py-3 text-white font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm cursor-pointer"
-                            >
-                                Ver Minhas Denúncias Detalhadas
-                            </button>
+                        >
+                            Ver Minhas Denúncias Detalhadas
+                        </button>
                     </div>
                 </section>
 

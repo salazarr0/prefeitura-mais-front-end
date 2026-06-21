@@ -18,6 +18,7 @@ export default function HomePageAdmin({
 }) {
 
     const [logado, setLogado] = useState(false);
+    const [menuPerfilAberto, setMenuPerfilAberto] = useState(false);
 
     const navigate = useNavigate();
 
@@ -68,22 +69,13 @@ export default function HomePageAdmin({
     }, []);
 
     useEffect(() => {
-            setPathsSidebar([
-                { id: 1, nome: "home", onClick: homeButton },
-                { id: 2, nome: "logout", onClick: logOut },
-                { id: 3, nome: "meu perfil", onClick: perfilButton },
-                { id: 4, nome: "Denuncia", onClick:() => setTipoPesquisa("denuncias"), className: `px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-green-600 ${tipoPesquisa === "denuncias"
-                                        && "bg-green-600 text-white"
-                                        }`},
-                { id: 5, nome: "Departamentos", onClick:() => setTipoPesquisa("departamentos"), className: `px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-green-600 ${tipoPesquisa === "departamentos"
-                                        && "bg-green-600 text-white"
-                                        }`}
+        setPathsSidebar([
+            { id: 1, nome: "denúncias", onClick: () => setTipoPesquisa("denuncias") },
+            { id: 2, nome: "departamentos", onClick: () => setTipoPesquisa("departamentos") },
+            { id: 3, nome: "criar departamento", onClick: departamentoButton }
+        ])
 
-            ])
-        
     }, [tipoPesquisa]);
-
-
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -106,19 +98,21 @@ export default function HomePageAdmin({
         navigate("/perfil")
     }
 
-    const homeButton = () => {
-        navigate("/admin")
-    }
     return (
         <>
-            <div className=" min-h-screen bg-gray-50 py-8 px-4">
+            <div className="min-h-screen bg-gray-50 py-8 px-4">
                 <div className="max-w-5xl mx-auto">
 
                     <header className="flex flex-col lg:flex-row gap-4 items-center justify-between bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
 
-                        <h1 className="text-2xl md:text-3xl font-extrabold text-blue-700 tracking-tight whitespace-nowrap">Prefeitura Mais ADM</h1>
-                        <SideBar pathsSidebar={pathsSidebar}/>
-                        <BarraDePesquisa className="w-full lg:max-w-md"
+                        <h1 className="text-2xl md:text-3xl font-extrabold text-blue-700 tracking-tight whitespace-nowrap">
+                            Prefeitura Mais ADM
+                        </h1>
+
+                        <SideBar pathsSidebar={pathsSidebar} />
+
+                        <BarraDePesquisa
+                            className="w-full lg:max-w-md"
                             dados={
                                 tipoPesquisa === "denuncias"
                                     ? todasDenuncias
@@ -132,11 +126,43 @@ export default function HomePageAdmin({
                             tipoPesquisa={tipoPesquisa}
                         />
 
-                        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 w-full lg:w-auto">
-                            <>
-                                <button onClick={departamentoButton} className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200">Criar departamentos</button>
-                                
-                            </>
+                        <div className="flex items-center justify-center gap-3 relative">
+
+                            <button
+                                onClick={departamentoButton}
+                                className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200"
+                            >
+                                Criar departamentos
+                            </button>
+
+                            <button
+                                onClick={() => setMenuPerfilAberto(!menuPerfilAberto)}
+                                className="w-11 h-11 flex items-center justify-center bg-gray-50 border border-gray-200 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer"
+                            >
+                                <img
+                                    src="https://cdn-icons-png.flaticon.com/128/1250/1250689.png"
+                                    className="w-6 h-6"
+                                />
+                            </button>
+
+                            {menuPerfilAberto && (
+                                <div className="absolute right-0 top-14 w-48 bg-white border border-gray-100 rounded-xl shadow-lg p-2 z-50">
+                                    <button
+                                        onClick={perfilButton}
+                                        className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-700 rounded-lg hover:bg-blue-600 hover:text-white transition-all cursor-pointer"
+                                    >
+                                        Meu perfil
+                                    </button>
+
+                                    <button
+                                        onClick={logOut}
+                                        className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-700 rounded-lg hover:bg-blue-600 hover:text-white transition-all cursor-pointer"
+                                    >
+                                        Sair
+                                    </button>
+                                </div>
+                            )}
+
                         </div>
 
                     </header>
@@ -164,7 +190,6 @@ export default function HomePageAdmin({
                         </>
                     )}
                 </main>
-
 
             </div>
         </>

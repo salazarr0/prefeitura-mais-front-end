@@ -36,11 +36,11 @@ export default function SideBar({ pathsSidebar }) {
 
                     <div className="space-y-3">
                         {pathsSidebar.map((path) => (
-                            <ul className="space-y-3">
-                                <li key={path.id}>
+                            <ul key={path.id} className="space-y-3">
+                                <li>
                                     <button
                                         onClick={path.onClick}
-                                        className={path.className || `w-full text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border border-gray-100 rounded-xl hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all cursor-pointer`}
+                                        className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 border border-gray-100 rounded-xl hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all cursor-pointer"
                                     >
                                         {path.nome}
                                     </button>

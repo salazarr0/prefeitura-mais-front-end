@@ -35,13 +35,11 @@ export default function DashboardPage() {
                 }
                 setLogado(true);
 
-                
                 const { data: userData } = await axios.get('https://prefeitura-mais-api-production.up.railway.app/usuarios/me', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
                 if (userData.papel !== 'funcionario') {
-                    
                     navigate("/");
                     return;
                 }
@@ -53,8 +51,7 @@ export default function DashboardPage() {
                 }
 
                 setDepartamento(userData.departamento);
-                
-                
+
                 const depId = userData.departamento.id;
 
                 const [statsRes, filaRes] = await Promise.all([
@@ -87,10 +84,8 @@ export default function DashboardPage() {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            
             setFila(fila.map(d => d.id === id ? { ...d, status: novoStatus } : d));
-            
-            
+
             if (departamento) {
                 const statsRes = await axios.get(`https://prefeitura-mais-api-production.up.railway.app/denuncias/estatisticas/${departamento.id}`, {
                     headers: { Authorization: `Bearer ${token}` }
@@ -117,7 +112,6 @@ export default function DashboardPage() {
         );
     }
 
-
     const getContagemStatus = (status) => {
         if (!estatisticas || !estatisticas.denuncias_por_status) return 0;
         const s = estatisticas.denuncias_por_status.find(item => item.status === status);
@@ -125,43 +119,41 @@ export default function DashboardPage() {
     };
 
     const handlePriorityChange = async (denunciaId, newPrioridade) => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.patch(`https://prefeitura-mais-api-production.up.railway.app/denuncias/${denunciaId}/prioridade`, 
-        { prioridade: Number(newPrioridade) },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      
-      setFila(prevFila => 
-        prevFila.map(d => 
-          d.id === denunciaId ? { ...d, prioridade: Number(newPrioridade) } : d
-        ).sort((a, b) => Number(b.prioridade) - Number(a.prioridade)) 
-      );
-      alert('Prioridade atualizada com sucesso!');
-    } catch (error) {
-      console.error('Erro ao atualizar prioridade:', error);
-      alert('Falha ao atualizar prioridade.');
-    }
-  };
+        try {
+            const token = localStorage.getItem('token');
+            await axios.patch(`https://prefeitura-mais-api-production.up.railway.app/denuncias/${denunciaId}/prioridade`,
+                { prioridade: Number(newPrioridade) },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            setFila(prevFila =>
+                prevFila.map(d =>
+                    d.id === denunciaId ? { ...d, prioridade: Number(newPrioridade) } : d
+                ).sort((a, b) => Number(b.prioridade) - Number(a.prioridade))
+            );
+            alert('Prioridade atualizada com sucesso!');
+        } catch (error) {
+            console.error('Erro ao atualizar prioridade:', error);
+            alert('Falha ao atualizar prioridade.');
+        }
+    };
 
     const pendentes = getContagemStatus("Pendente");
     const emAnalise = getContagemStatus("Em análise");
     const resolvidas = getContagemStatus("Resolvido");
-    
-    
+
     const prioridadeAlta = fila.filter(d => d.prioridade === 3 && d.status !== 'Resolvido').length;
 
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4">
             <SideBar pathsSidebar={pathsSidebar} />
-            
+
             <div className="max-w-7xl mx-auto pl-0 md:pl-16">
                 <header className="mb-8">
                     <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight">Dashboard de Atendimento</h1>
                     <p className="text-gray-500 mt-1">Departamento: <span className="font-semibold text-blue-600">{departamento.nome}</span></p>
                 </header>
 
-                
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4">
                         <div className="p-3 bg-red-50 text-red-600 rounded-xl">
@@ -172,7 +164,7 @@ export default function DashboardPage() {
                             <h3 className="text-2xl font-bold text-gray-800">{prioridadeAlta}</h3>
                         </div>
                     </div>
-                    
+
                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-4">
                         <div className="p-3 bg-yellow-50 text-yellow-600 rounded-xl">
                             <Clock size={28} />
@@ -211,14 +203,14 @@ export default function DashboardPage() {
                             <p className="text-sm text-gray-500 mt-1">Denúncias ordenadas por prioridade.</p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-3">
-                            <input 
-                                type="text" 
-                                placeholder="Buscar por título ou endereço..." 
+                            <input
+                                type="text"
+                                placeholder="Buscar por título ou endereço..."
                                 className="px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-100"
                                 value={filtroBusca}
                                 onChange={(e) => setFiltroBusca(e.target.value)}
                             />
-                            <select 
+                            <select
                                 className="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
                                 value={filtroStatus}
                                 onChange={(e) => setFiltroStatus(e.target.value)}
@@ -230,7 +222,7 @@ export default function DashboardPage() {
                             </select>
                         </div>
                     </div>
-                    
+
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
@@ -247,9 +239,9 @@ export default function DashboardPage() {
                             <tbody>
                                 {fila
                                     .filter(d => filtroStatus === "Todos" || d.status === filtroStatus)
-                                    .filter(d => 
-                                        d.titulo.toLowerCase().includes(filtroBusca.toLowerCase()) || 
-                                        d.endereco_denuncia.toLowerCase().includes(filtroBusca.toLowerCase())
+                                    .filter(d =>
+                                        d.titulo.toLowerCase().includes(filtroBusca.toLowerCase()) ||
+                                        (d.endereco_denuncia || d.endereco || "").toLowerCase().includes(filtroBusca.toLowerCase())
                                     )
                                     .length === 0 ? (
                                     <tr>
@@ -257,67 +249,66 @@ export default function DashboardPage() {
                                     </tr>
                                 ) : (
                                     fila
-                                    .filter(d => filtroStatus === "Todos" || d.status === filtroStatus)
-                                    .filter(d => 
-                                        d.titulo.toLowerCase().includes(filtroBusca.toLowerCase()) || 
-                                        d.endereco_denuncia.toLowerCase().includes(filtroBusca.toLowerCase())
-                                    )
-                                    .map(denuncia => (
-                                        <tr key={denuncia.id} className="hover:bg-gray-50 transition-colors border-b last:border-0">
-                                            <td className="p-4 text-sm text-gray-600">#{denuncia.id}</td>
-                                            <td className="p-4">
-                                                <p className="font-semibold text-gray-800">{denuncia.titulo}</p>
-                                                <p className="text-xs text-gray-500">{denuncia.tipo_denuncia}</p>
-                                            </td>
-                                            <td className="p-4 text-sm text-gray-600 max-w-xs truncate" title={denuncia.endereco_denuncia}>
-                                                {denuncia.endereco_denuncia}
-                                            </td>
-                                            <td className="p-4">
-                                                {denuncia.prioridade === 3 && <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full">Alta</span>}
-                                                {denuncia.prioridade === 2 && <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full">Média</span>}
-                                                {denuncia.prioridade === 1 && <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Baixa</span>}
-                                                {(!denuncia.prioridade || denuncia.prioridade < 1 || denuncia.prioridade > 3) && <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">N/D</span>}
-                                            </td>
-                                            <td className="p-4 text-sm text-gray-800 font-bold">
-                                                {denuncia.votos || 0}
-                                            </td>
-                                            <td className="p-4">
-                                                <span className={`px-2 py-1 text-xs font-bold rounded-full ${
-                                                    denuncia.status === 'Resolvido' ? 'bg-green-100 text-green-700' :
-                                                    denuncia.status === 'Em análise' ? 'bg-blue-100 text-blue-700' :
-                                                    'bg-yellow-100 text-yellow-700'
-                                                }`}>
-                                                    {denuncia.status}
-                                                </span>
-                                            </td>
-                                            <td className="p-4 space-y-2">
-                                                <select 
-                                                    className="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                                    value={denuncia.status}
-                                                    onChange={(e) => handleAtualizarStatus(denuncia.id, e.target.value)}
-                                                >
-                                                    <option value="Pendente">Pendente</option>
-                                                    <option value="Em análise">Em análise</option>
-                                                    <option value="Resolvido">Resolvido</option>
-                                                </select>
-                                                <select 
-                                                    className="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                                    value={denuncia.prioridade || 1}
-                                                    onChange={(e) => handlePriorityChange(denuncia.id, e.target.value)}
-                                                >
-                                                    <option value="1">Baixa (1)</option>
-                                                    <option value="2">Média (2)</option>
-                                                    <option value="3">Alta (3)</option>
-                                                </select>
-                                                <button 
-                                                    onClick={() => navigate(`/denuncias/${denuncia.id}`)}
-                                                    className="w-full mt-2 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded transition-colors"
-                                                >
-                                                    Ver Detalhes
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))
+                                        .filter(d => filtroStatus === "Todos" || d.status === filtroStatus)
+                                        .filter(d =>
+                                            d.titulo.toLowerCase().includes(filtroBusca.toLowerCase()) ||
+                                            (d.endereco_denuncia || d.endereco || "").toLowerCase().includes(filtroBusca.toLowerCase())
+                                        )
+                                        .map(denuncia => (
+                                            <tr key={denuncia.id} className="hover:bg-gray-50 transition-colors border-b last:border-0">
+                                                <td className="p-4 text-sm text-gray-600">#{denuncia.id}</td>
+                                                <td className="p-4">
+                                                    <p className="font-semibold text-gray-800">{denuncia.titulo}</p>
+                                                    <p className="text-xs text-gray-500">{denuncia.tipo_denuncia}</p>
+                                                </td>
+                                                <td className="p-4 text-sm text-gray-600 max-w-xs truncate" title={denuncia.endereco_denuncia || denuncia.endereco}>
+                                                    {denuncia.endereco_denuncia || denuncia.endereco || "Endereço não informado"}
+                                                </td>
+                                                <td className="p-4">
+                                                    {denuncia.prioridade === 3 && <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full">Alta</span>}
+                                                    {denuncia.prioridade === 2 && <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full">Média</span>}
+                                                    {denuncia.prioridade === 1 && <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Baixa</span>}
+                                                    {(!denuncia.prioridade || denuncia.prioridade < 1 || denuncia.prioridade > 3) && <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">N/D</span>}
+                                                </td>
+                                                <td className="p-4 text-sm text-gray-800 font-bold">
+                                                    {denuncia.votos || 0}
+                                                </td>
+                                                <td className="p-4">
+                                                    <span className={`px-2 py-1 text-xs font-bold rounded-full ${denuncia.status === 'Resolvido' ? 'bg-green-100 text-green-700' :
+                                                        denuncia.status === 'Em análise' ? 'bg-blue-100 text-blue-700' :
+                                                            'bg-yellow-100 text-yellow-700'
+                                                        }`}>
+                                                        {denuncia.status}
+                                                    </span>
+                                                </td>
+                                                <td className="p-4 space-y-2">
+                                                    <select
+                                                        className="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+                                                        value={denuncia.status}
+                                                        onChange={(e) => handleAtualizarStatus(denuncia.id, e.target.value)}
+                                                    >
+                                                        <option value="Pendente">Pendente</option>
+                                                        <option value="Em análise">Em análise</option>
+                                                        <option value="Resolvido">Resolvido</option>
+                                                    </select>
+                                                    <select
+                                                        className="bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+                                                        value={denuncia.prioridade || 1}
+                                                        onChange={(e) => handlePriorityChange(denuncia.id, e.target.value)}
+                                                    >
+                                                        <option value="1">Baixa (1)</option>
+                                                        <option value="2">Média (2)</option>
+                                                        <option value="3">Alta (3)</option>
+                                                    </select>
+                                                    <button
+                                                        onClick={() => navigate(`/denuncias/${denuncia.id}`)}
+                                                        className="w-full mt-2 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded transition-colors"
+                                                    >
+                                                        Ver Detalhes
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
                                 )}
                             </tbody>
                         </table>

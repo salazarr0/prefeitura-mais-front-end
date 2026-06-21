@@ -8,6 +8,12 @@ function CardDenuncia({ id, titulo, descricao, endereco, status, usuario, tipo_d
     const [confirmado, setConfirmado] = useState(false);
     const navigate = useNavigate();
 
+    const corStatus = status === "Resolvido"
+        ? "bg-green-100 text-green-700"
+        : status === "Em análise"
+            ? "bg-blue-100 text-blue-700"
+            : "bg-yellow-100 text-yellow-700";
+
     useEffect(() => {
         const fetchStatus = async () => {
             if (!id) return;
@@ -54,7 +60,7 @@ function CardDenuncia({ id, titulo, descricao, endereco, status, usuario, tipo_d
 
             <div className="flex justify-between items-start mb-3">
                 <h2 className="font-bold text-lg text-gray-800">{titulo}</h2>
-                <span className="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-700">{status}</span>
+                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${corStatus}`}>{status}</span>
             </div>
             <p className="text-gray-600 text-sm flex-grow">{descricao}</p>
 
@@ -78,7 +84,7 @@ function CardDenuncia({ id, titulo, descricao, endereco, status, usuario, tipo_d
                     <span className="text-sm font-semibold text-gray-600 bg-gray-50 px-3 py-1 rounded-full border border-gray-150">
                         {contador} {contador === 1 ? 'apoio' : 'apoios'}
                     </span>
-                    <button 
+                    <button
                         onClick={() => navigate(`/denuncias/${id}`)}
                         className="text-blue-600 hover:text-blue-800 text-sm font-semibold underline cursor-pointer"
                     >

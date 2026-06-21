@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router"
+import SideBar from "../components/SideBar"
 
 
 function PostarDenunciaPage() {
@@ -12,6 +13,11 @@ function PostarDenunciaPage() {
     const [tipo_denuncia_id, setTipo_denuncia_id] = useState(0);
     const [tipo_denuncia, setTipo_denuncia] = useState([]);
     const [menssagem, setMenssagem] = useState("");
+
+    const pathsSidebar = [
+        { id: 1, nome: "home", onClick: () => navigate("/") },
+        { id: 2, nome: "postar denúncia", onClick: () => navigate("/postar-denuncia") }
+    ];
 
     useEffect(() => {
 
@@ -71,20 +77,15 @@ function PostarDenunciaPage() {
 
     return (
         <>
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-8">
+
+                <SideBar pathsSidebar={pathsSidebar} />
 
                 <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
 
                     <h1 className="text-3xl font-extrabold text-blue-700 text-center mb-6">
                         Prefeitura Mais
                     </h1>
-
-                    <button
-                        className="w-full mb-4 py-2 text-sm font-semibold text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
-                        onClick={() => navigate("/")}
-                    >
-                        Home
-                    </button>
 
                     <h2 className="text-xl font-bold text-gray-800 text-center mb-6">
                         Denuncie Aqui
