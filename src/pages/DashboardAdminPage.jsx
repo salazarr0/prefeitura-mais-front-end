@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { Building2 } from "lucide-react";
 import SideBar from "../components/SideBar";
+import { ArrowLeft } from "lucide-react";
 
 export default function DashboardAdminPage() {
     const navigate = useNavigate();
@@ -69,6 +70,13 @@ export default function DashboardAdminPage() {
             <SideBar pathsSidebar={pathsSidebar} />
 
             <div className="max-w-7xl mx-auto pl-0 md:pl-16">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="mb-6 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors inline-flex items-center justify-center bg-transparent border-none shadow-none hover:shadow-none hover:-translate-y-0"
+                    title="Voltar"
+                >
+                    <ArrowLeft className="w-6 h-6" />
+                </button>
                 <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight">Dashboard Admin</h1>

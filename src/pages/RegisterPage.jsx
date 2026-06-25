@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import { ArrowLeft } from "lucide-react";
 
 
 function RegisterPage() {
@@ -47,29 +48,18 @@ function RegisterPage() {
         <>
             <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
 
-                <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative">
+                    <button
+                        onClick={backButton}
+                        className="absolute top-6 left-6 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors flex items-center justify-center bg-transparent border-none shadow-none hover:shadow-none hover:-translate-y-0"
+                        title="Voltar"
+                    >
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
 
                     <h1 className="text-3xl font-extrabold text-blue-700 text-center mb-6">
                         Prefeitura Mais
                     </h1>
-
-                    <div className="flex gap-3 mb-4">
-
-                        <button
-                            onClick={backButton}
-                            className="flex-1 py-2 text-sm font-semibold text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
-                        >
-                            Voltar
-                        </button>
-
-                        <button
-                            onClick={loginButton}
-                            className="flex-1 py-2 text-sm font-semibold text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
-                        >
-                            Login
-                        </button>
-
-                    </div>
 
                     <h2 className="text-xl font-bold text-gray-800 text-center mb-6">
                         Registrar
@@ -109,10 +99,19 @@ function RegisterPage() {
 
                         <button
                             onClick={handleRegister}
-                            className="w-full py-3 text-white font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+                            className="w-full py-3 text-white font-semibold bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer mb-4"
                         >
                             Confirmar Registro
                         </button>
+
+                        <div className="flex justify-center border-t border-gray-100 pt-4">
+                            <button
+                                onClick={loginButton}
+                                className="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors bg-transparent border-none shadow-none hover:shadow-none hover:-translate-y-0 cursor-pointer"
+                            >
+                                Já tem uma conta? Faça Login
+                            </button>
+                        </div>
 
                     </div>
 

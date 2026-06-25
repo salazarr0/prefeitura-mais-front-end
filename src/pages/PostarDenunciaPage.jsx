@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router"
 import SideBar from "../components/SideBar"
+import { ArrowLeft } from "lucide-react"
 
 
 function PostarDenunciaPage() {
@@ -15,8 +16,8 @@ function PostarDenunciaPage() {
     const [menssagem, setMenssagem] = useState("");
 
     const pathsSidebar = [
-        { id: 1, nome: "home", onClick: () => navigate("/") },
-        { id: 2, nome: "postar denúncia", onClick: () => navigate("/postar-denuncia") }
+        { id: 1, nome: "Home", onClick: () => navigate("/") },
+        { id: 2, nome: "Postar Denúncia", onClick: () => navigate("/postar-denuncia") }
     ];
 
     useEffect(() => {
@@ -49,7 +50,7 @@ function PostarDenunciaPage() {
                 titulo: titulo,
                 descricao: descricao,
                 endereco_denuncia: endereco_denuncia,
-                tipo_denuncia_id: tipo_denuncia_id
+                tipo_denuncia_id: Number(tipo_denuncia_id)
             }
             const resposta = await axios.post(
                 "https://prefeitura-mais-api-production.up.railway.app/denuncias",
@@ -66,9 +67,9 @@ function PostarDenunciaPage() {
 
         } catch (error) {
             if (error.response) {
-
-                setMenssagem(error.response.data.menssagem || "Erro ao fazer login")
-
+                const data = error.response.data;
+                const msg = data.mensagem || data.menssagem || data.message || data.error || (typeof data === 'string' ? data : JSON.stringify(data));
+                setMenssagem(msg);
             } else {
                 setMenssagem("Erro de conexão com o servidor")
             }
@@ -81,7 +82,15 @@ function PostarDenunciaPage() {
 
                 <SideBar pathsSidebar={pathsSidebar} />
 
-                <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative">
+
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="absolute top-6 left-6 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors flex items-center justify-center bg-transparent border-none shadow-none hover:shadow-none hover:-translate-y-0"
+                        title="Voltar"
+                    >
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
 
                     <h1 className="text-3xl font-extrabold text-blue-700 text-center mb-6">
                         Prefeitura Mais

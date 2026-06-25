@@ -2,6 +2,8 @@ import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { jwtDecode } from "jwt-decode";
+import { ArrowLeft } from "lucide-react";
+
 
 
 export default function LoginPage() {
@@ -47,18 +49,17 @@ export default function LoginPage() {
         <>
             <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
 
-                <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-
+                <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="absolute top-6 left-6 text-gray-400 hover:text-blue-600 transition-colors cursor-pointer"
+                        title="Voltar"
+                    >
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
                     <h1 className="text-3xl font-extrabold text-blue-700 text-center mb-6">
                         Prefeitura Mais
                     </h1>
-
-                    <button
-                        className="w-full mb-4 py-2 text-sm font-semibold text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
-                        onClick={() => navigate("/")}
-                    >
-                        Home
-                    </button>
 
                     {mensagem && (
                         <div className="w-full mb-4 p-3 text-sm text-center text-red-700 bg-red-100 border border-red-300 rounded-lg">

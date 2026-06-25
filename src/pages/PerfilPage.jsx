@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import CardDenuncia from "../components/cardDenuncia"
 import { useNavigate } from "react-router"
+import { ArrowLeft } from "lucide-react";
 
 
 export default function PerfilPage() {
@@ -47,9 +48,10 @@ export default function PerfilPage() {
 
                     <button
                         onClick={backButton}
-                        className="mb-6 px-4 py-2 text-sm font-semibold text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer shadow-sm"
+                        className="mb-6 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors inline-flex items-center justify-center bg-transparent border-none shadow-none hover:shadow-none hover:-translate-y-0"
+                        title="Voltar"
                     >
-                        Voltar
+                        <ArrowLeft className="w-6 h-6" />
                     </button>
 
                     <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
@@ -134,9 +136,10 @@ export default function PerfilPage() {
 
                 <button
                     onClick={backButton}
-                    className="mb-6 px-4 py-2 text-sm font-semibold text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer shadow-sm"
+                    className="mb-6 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors inline-flex items-center justify-center bg-transparent border-none shadow-none hover:shadow-none hover:-translate-y-0"
+                    title="Voltar"
                 >
-                    Voltar
+                    <ArrowLeft className="w-6 h-6" />
                 </button>
 
                 <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
