@@ -26,6 +26,10 @@ export default function HomePageAdmin({
 
     const [pathsSidebar, setPathsSidebar] = useState([]);
 
+    const dashboardAdminButton = () => {
+        navigate('/admin/dashboard');
+    }
+
     useEffect(() => {
 
         const carregarDenuncias = async () => {
@@ -70,9 +74,9 @@ export default function HomePageAdmin({
 
     useEffect(() => {
         setPathsSidebar([
-            { id: 1, nome: "denúncias", onClick: () => setTipoPesquisa("denuncias") },
-            { id: 2, nome: "departamentos", onClick: () => setTipoPesquisa("departamentos") },
-            { id: 3, nome: "criar departamento", onClick: departamentoButton }
+            { id: 1, nome: "Denúncias", onClick: () => setTipoPesquisa("denuncias") },
+            { id: 2, nome: "Departamentos", onClick: () => setTipoPesquisa("departamentos") },
+            { id: 3, nome: "Dashboard Admin", onClick: dashboardAdminButton }
         ])
 
     }, [tipoPesquisa]);
@@ -83,10 +87,6 @@ export default function HomePageAdmin({
             setLogado(true)
         }
     }, [])
-
-    const departamentoButton = () => {
-        navigate('/admin/criar-departamento');
-    }
 
     const logOut = () => {
         localStorage.removeItem("token")
@@ -129,10 +129,10 @@ export default function HomePageAdmin({
                         <div className="flex items-center justify-center gap-3 relative">
 
                             <button
-                                onClick={departamentoButton}
+                                onClick={dashboardAdminButton}
                                 className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200"
                             >
-                                Criar departamentos
+                                Dashboard Admin
                             </button>
 
                             <button
@@ -151,7 +151,7 @@ export default function HomePageAdmin({
                                         onClick={perfilButton}
                                         className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-700 rounded-lg hover:bg-blue-600 hover:text-white transition-all cursor-pointer"
                                     >
-                                        Meu perfil
+                                        Meu Perfil
                                     </button>
 
                                     <button

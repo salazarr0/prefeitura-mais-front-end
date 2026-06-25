@@ -6,7 +6,9 @@ import { useState } from "react"
 import { BrowserRouter, Routes, Route } from "react-router";
 import PostarDenunciaPage from './pages/PostarDenunciaPage.jsx';
 import HomePageAdmin from './pages/HomePageAdmin.jsx';
+import DashboardAdminPage from './pages/DashboardAdminPage.jsx';
 import CriarDepartamentoPage from './pages/CriarDepartamentoPage.jsx';
+import EditarDepartamentoPage from './pages/EditarDepartamentoPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import MinhasDenunciasPage from './pages/MinhasDenunciasPage.jsx';
 import DenunciaDetalhesPage from './pages/DenunciaDetalhesPage.jsx';
@@ -44,7 +46,9 @@ function App() {
               setDepartamento={setDepartamento}
             />}
           />
+          <Route path="/admin/dashboard" element={<DashboardAdminPage />} />
           <Route path="/admin/criar-departamento" element={< CriarDepartamentoPage />} />
+          <Route path="/admin/editar-departamento/:id" element={< EditarDepartamentoPage />} />
           <Route path="/funcionario/dashboard" element={<DashboardPage />} />
           <Route path="/perfil" element={< PerfilPage />} />
           <Route path="/minhas-denuncias" element={< MinhasDenunciasPage />} />
